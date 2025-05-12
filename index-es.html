@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepRat | Ingeniero de IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --dark: #0a0a0a;
+            --light: #e0e0e0;
+            --terminal: #0d0208;
+        }
+
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: var(--terminal);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .terminal-text {
+            color: var(--primary);
+            text-shadow: 0 0 3px var(--primary);
+        }
+
+        .terminal-bg {
+            background-color: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .terminal-border {
+            border: 1px solid var(--primary);
+            position: relative;
+        }
+
+        .terminal-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid var(--secondary);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .prompt {
+            color: var(--secondary);
+        }
+
+        .command {
+            color: var(--primary);
+        }
+
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1 }
+            50% { opacity: 0 }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end);
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        .tech-chip {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .tech-chip:hover {
+            background: rgba(0, 255, 65, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 5px var(--primary);
+        }
+
+        .project-card {
+            background: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .contact-input {
+            background: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .contact-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 5px var(--secondary);
+        }
+
+        .status-bar {
+            height: 30px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--terminal);
+            font-weight: bold;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            margin-right: 10px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+
+        .tab {
+            padding: 5px 15px;
+            border: 1px solid var(--primary);
+            border-bottom: none;
+            background: rgba(0, 255, 65, 0.1);
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: rgba(0, 255, 65, 0.3);
+        }
+
+        .console-output {
+            height: auto;
+            max-height: none;
+            overflow-y: visible;
+            padding: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .console-output::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .console-output::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .console-output::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        }
+
+        .command-line {
+            display: flex;
+            align-items: center;
+            padding: 0 15px 15px 15px;
+        }
+
+        .command-line input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-family: 'Source Code Pro', monospace;
+            padding-left: 10px;
+        }
+
+        .command-line input:focus {
+            outline: none;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.3;
+            color: var(--primary);
+            font-size: 0.6rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .rat-animation {
+            animation: rat-scroll 10s linear infinite;
+        }
+
+        @keyframes rat-scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: var(--terminal);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 100vh;
+            background-color: var(--terminal);
+            z-index: 100;
+            border-left: 1px solid var(--primary);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu-close {
+            align-self: flex-end;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Language switcher */
+        .language-switcher {
+            position: relative;
+            z-index: 10;
+        }
+
+        .language-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--terminal);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            display: none;
+            min-width: 120px;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-option:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .project-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .tech-stack {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .console-output {
+                font-size: 0.7rem;
+            }
+            
+            .ascii-art {
+                font-size: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="content">
+        <!-- Navigation -->
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center terminal-bg">
+            <div class="text-2xl font-bold terminal-text">
+                <span class="prompt">$</span> <span class="command">deeprat</span><span class="blinking-cursor">_</span>
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-primary transition"><span class="prompt">></span> sobre mí</a>
+                <a href="#work" class="hover:text-primary transition"><span class="prompt">></span> proyectos</a>
+                <a href="#contact" class="hover:text-primary transition"><span class="prompt">></span> contacto</a>
+                <div class="language-switcher">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>ES</span>
+                        <i class="fas fa-caret-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="es">Español</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center md:hidden">
+                <div class="language-switcher mr-4">
+                    <button class="language-btn" id="mobileLanguageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>ES</span>
+                    </button>
+                </div>
+                <button id="mobileMenuBtn">
+                    <i class="fas fa-bars text-2xl terminal-text"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-close" id="mobileMenuClose">
+                    <i class="fas fa-times terminal-text"></i>
+                </div>
+                <a href="#about" class="hover:text-primary transition text-xl"><span class="prompt">></span> sobre mí</a>
+                <a href="#work" class="hover:text-primary transition text-xl"><span class="prompt">></span> proyectos</a>
+                <a href="#contact" class="hover:text-primary transition text-xl"><span class="prompt">></span> contacto</a>
+                <div class="pt-4 border-t border-primary mt-4">
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="es">Español</div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 py-20 md:py-32">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <p class="text-secondary mb-4"><span class="prompt">$</span> Hola, soy DeepRat — tu rata de laboratorio de IA.</p>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-4 terminal-text glow-text">Gonzalo Romero</h1>
+                    <h2 class="text-xl md:text-2xl text-gray-300 mb-8 typewriter">
+                        <span class="prompt">$</span> Ingeniero de IA & Científico de Datos
+                    </h2>
+                    <div class="flex space-x-4 hero-buttons">
+                        <a href="#work" class="px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                            <span class="prompt">$</span> explorar_proyectos
+                        </a>
+                        <a href="#contact" class="px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                            <span class="prompt">$</span> contactar
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <div class="terminal-bg p-4 rounded w-full">
+                        <div class="status-bar">
+                            <div class="window-controls">
+                                <div class="window-control close"></div>
+                                <div class="window-control minimize"></div>
+                                <div class="window-control maximize"></div>
+                            </div>
+                            <span>deeprat_consola</span>
+                        </div>
+                        <div class="console-output terminal-border">
+                              ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠶⠛⠉⠉⠻⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠟⠁⠀⠀⠀⠀⠀⢹⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⠀⠀⠀⠀⠀⢸⡟⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠈⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⡶⢶⣤⣀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⣼⠇⠀⠈⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⡿⠁⠀⠀⠈⢻⡆⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⢀⣿⣷⡀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡴⠟⣡⠞⠁⠀⠀⠀⠀⠈⣿⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⣶⣤⣿⣧⣴⣶⣾⠃⠸⣷⣾⣿⣶⢶⣶⣶⠀⣠⡆⢀⣠⡄⣠⡴⣶⡾⠋⠁⣠⡞⠁⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠹⣏⠻⣾⡿⡟⣿⠀⠀⠛⠈⠉⠁⠘⣿⠛⣿⢻⡿⠛⣿⡟⠋⣼⠋⠀⠀⢰⡏⠀⠀⠀⠀⠀⠀⠀⠀⢀⡿⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⡀⠀⠀⣀⢠⣄⣿⠀⠘⡿⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠰⠟⠀⣸⣿⣴⡆⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣀⠈⢿⣿⡟⢿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⢹⡇⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⢀⡿⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣦⣼⠋⣷⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⢹⡆⠀⠀⠀⠀⠀⠀⢠⡿⠁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣡⡄⣸⠇⠀⠀⠀⠀⠀⣠⡟⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠟⢿⠿⠚⢛⡿⠆⠀⠀⣠⡾⠋⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠁⠀⢀⡾⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣠⣴⠿⠷⠶⠶⠶⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠙⠛⠲⢤⣀⠀⠈⠓⣿⣀⡀⢼⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⢿⣿⣦⣀⠀⠀⠀⠀⠙⣻⣷⡤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠲⣄⣿⡿⢇⠀⠀⠈⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠿⣿⣿⣿⣿⠂⠀⠀⠀⠀⢽⣝⣧⠀⠀⣀⣀⣀⣠⠤⠤⠤⠴⠶⠶⠶⠄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠲⠦⢤⣀⣸⡟⠦⣀⠱⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠀⠀⢀⣀⡤⠴⢿⣿⡏⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣀⣤⡤⠤⠤⠦⠤⠤⣤⣀⣹⡓⢤⣈⠙⢮⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡤⠚⠋⠉⠀⠀⠀⣸⣏⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠠⠔⠒⠋⠉⠀⢀⣀⣠⠤⠴⠶⠶⠶⠤⣿⣗⡲⠬⠳⣎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣾⠭⠷⠒⠒⠛⠛⠉⠉⢩⡟⠛⠉⠛⠛⠒⠲⠆⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠁⠀⢀⣀⣀⣀⠀⠄⣠⣿⣉⣳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣾⣿⣟⣒⣒⡒⠒⠒⠒⠶⠶⣾⠿⢄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢀⣠⠴⠛⠉⠀⠀⠀⠀⣀⣀⣼⣷⡬⣽⣷⣀⠀⢰⡆⠀⣤⡀⣴⡆⠀⢠⣿⢿⣿⢿⣷⣲⠬⣽⣟⠓⠲⢤⣼⡃⠀⠀⠀⠈⠙⠓⠦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣠⠖⠋⠀⠀⠀⢀⡤⠔⠛⠉⠁⠀⠀⠈⢷⣄⠀⠀⠀⠘⢿⣶⣇⣻⡿⠗⠀⠀⠈⠳⣌⠛⢦⡈⣹⠿⠯⣝⣳⣾⢇⣈⠙⠲⢤⣀⠀⠀⠀⠀⠙⠲⣄⡀⠀⠀⠀⠀⠀
+⠀⠀⠚⠁⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀⠈⣿⠁⠀⠀⠀⠀⠀⠀⠘⣦⡴⠿⣇⣀⣠⠾⠛⠳⣄⠈⠙⠶⢄⡉⠳⢤⡀⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢠⠞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣦⣄⣠⡶⠛⢷⣤⡀⠀⠀⣀⣤⡾⠛⣟⠉⠙⣏⠀⠀⠀⠀⠀⠑⢦⡀⠀⠙⠢⡀⠉⠲⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢠⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠦⠴⠞⠛⠉⠉⠉⠀⠀⠀⠘⡄⠀⠘⢦⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠘⠆⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠈⠳⠄⠀⠀⠀⠀⠀⠈⠳⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                          
+                        </div>
+                        <div class="command-line">
+                            <span class="prompt">$</span>
+                            <input type="text" value="bienvenido --gui" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>sobre_mi.txt</span>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 terminal-text">
+                        <span class="prompt">$</span> <span class="command">cat</span> sobre_mi.txt
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> ¡Hola! Soy Gonzalo, también conocido como DeepRat.</p>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> Mi pasión por la ciencia comenzó a los 6 años con Cosmos de Carl Sagan.</p>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> Desde entonces he explorado cada rama del conocimiento hasta encontrar mi hogar en la Inteligencia Artificial.</p>
+                            <p class="text-gray-300 mb-6"><span class="prompt">$</span> Hoy soy un Ingeniero de IA certificado por IBM y estudiante de Ingeniería en Sistemas en la UTN, especializado en IA Generativa, NLP y Visión por Computadora.</p>
+                            <p class="text-gray-300"><span class="prompt">$</span> Paso prácticamente todo mi tiempo leyendo artículos y experimentando en notebooks—¡básicamente hablo con chatbots todo el día!</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 terminal-text">
+                                <span class="prompt">$</span> <span class="command">ls</span> -l stack_tecnologico/
+                            </h3>
+                            <div class="flex flex-wrap gap-3 tech-stack">
+                                <span class="tech-chip px-4 py-2 rounded">Python</span>
+                                <span class="tech-chip px-4 py-2 rounded">PyTorch</span>
+                                <span class="tech-chip px-4 py-2 rounded">TensorFlow</span>
+                                <span class="tech-chip px-4 py-2 rounded">Keras</span>
+                                <span class="tech-chip px-4 py-2 rounded">HuggingFace</span>
+                                <span class="tech-chip px-4 py-2 rounded">SentenceTransformers</span>
+                                <span class="tech-chip px-4 py-2 rounded">StableDiffusion</span>
+                                <span class="tech-chip px-4 py-2 rounded">FAISS</span>
+                                <span class="tech-chip px-4 py-2 rounded">LangChain</span>
+                                <span class="tech-chip px-4 py-2 rounded">FastAPI</span>
+                                <span class="tech-chip px-4 py-2 rounded">Streamlit</span>
+                                <span class="tech-chip px-4 py-2 rounded">Gradio</span>
+                                <span class="tech-chip px-4 py-2 rounded">ColabPro</span>
+                                <span class="tech-chip px-4 py-2 rounded">Git</span>
+                                <span class="tech-chip px-4 py-2 rounded">GitHub</span>
+                                <span class="tech-chip px-4 py-2 rounded">DVC</span>
+                                <span class="tech-chip px-4 py-2 rounded">MLflow</span>
+                                <span class="tech-chip px-4 py-2 rounded">HTML/CSS/JS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>proyectos/</span>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 terminal-text">
+                        <span class="prompt">$</span> <span class="command">cd</span> proyectos/
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Project 1 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-robot terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">Benchmark de Chatbot RAG</h3>
+                            </div>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Comparación exhaustiva de latencia y calidad generativa de chatbots RAG basados en Phi-2 y LLaMA-2 en GPUs T4, L4 y A100, midiendo BERTScore y ROUGE-L.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLM</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Benchmarking</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <a href="https://github.com/DeepRatAI/RAGbotBenchmark_Gcolab" target="_blank" class="terminal-text hover:underline flex items-center">
+                                    <span class="prompt">$</span> <span class="command">abrir</span> github
+                                </a>
+                                <a href="https://www.linkedin.com/pulse/rag-colab-hands-on-benchmarking-phi-2-llama-2-t4-vs-a100-romero-zvrgf" target="_blank" class="terminal-text hover:underline flex items-center">
+                                    <span class="prompt">$</span> <span class="command">abrir</span> artículo
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-graduation-cap terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">Mole "¡Sumérgete!"</h3>
+                            </div>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Asistente educativo RAG que extrae conocimiento de tus documentos para generar resúmenes académicos y responder preguntas en modos Perspicaz o Experto (FAISS + LLaMA).</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Educación</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLaMA</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/Mole_v1" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">abrir</span> github
+                            </a>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-eye terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">TrueEye</h3>
+                            </div>
+                            <span class="coming-soon">PRÓXIMAMENTE</span>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Detector Multimodal de Desinformación: Plataforma de IA que analiza texto e imágenes de URLs para clasificar noticias reales/falsas en siete categorías con explicaciones en lenguaje natural.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">NLP</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">CV</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Desinformación</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/TrueEye" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">abrir</span> github
+                            </a>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-book terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">VernnEdX</h3>
+                            </div>
+                            <span class="coming-soon">PRÓXIMAMENTE</span>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Ciencia Narrativa: Convierte preguntas científicas en historias literarias con viñetas estilo cómic.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">IA Creativa</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Educación</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Storytelling</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/VernnEd-X" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">abrir</span> github
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>formulario_contacto.py</span>
+                </div>
+                <div class="p-6">
+                    <div class="max-w-3xl mx-auto text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 terminal-text">
+                            <span class="prompt">$</span> <span class="command">que_sigue</span>
+                        </h2>
+                        <h3 class="text-xl md:text-2xl mb-4 terminal-text">
+                            <span class="prompt">$</span> Contáctame
+                        </h3>
+                        <p class="text-gray-400"><span class="prompt">$</span> Actualmente estoy buscando nuevas oportunidades en ingeniería de IA y ciencia de datos. ¡Ya sea que tengas una pregunta o solo quieras saludar, haré todo lo posible por responderte!</p>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto">
+                        <form id="contactForm"
+                              action="https://formsubmit.co/info@deeprat.tech"
+                              method="POST"
+                              class="space-y-6">
+
+                            <!-- Honeypot antispam -->
+                            <input type="text" name="_honey" style="display:none">
+
+                            <!-- Personalización FormSubmit -->
+                            <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde formulario DeepRat">
+                            <input type="hidden" name="_next"    value="https://deeprat.tech/gracias.html">
+                            <input type="hidden" name="_captcha" value="false">
+
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-400 mb-2">
+                                    <span class="prompt">$</span> Nombre:
+                                </label>
+                                <input type="text" id="name" name="name" class="contact-input w-full px-4 py-3 rounded" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-400 mb-2">
+                                    <span class="prompt">$</span> Email:
+                                </label>
+                                <input type="email" id="email" name="email" class="contact-input w-full px-4 py-3 rounded" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-400 mb-2">
+                                    <span class="prompt">$</span> Mensaje:
+                                </label>
+                                <textarea id="message" name="message" rows="5" class="contact-input w-full px-4 py-3 rounded" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                                <span class="prompt">$</span> <span class="command">enviar_mensaje</span>
+                            </button>
+                        </form>
+
+                        <div class="mt-12 flex justify-center space-x-6">
+                            <a href="https://github.com/DeepRatAI" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">github</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/gonzalo-luis-romero-b9b5b4355" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">linkedin</span>
+                            </a>
+                            <a href="mailto:info@deeprat.tech" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="container mx-auto px-6 py-8 text-center text-gray-500 text-sm terminal-bg">
+            <p><span class="prompt">$</span> <span class="command">salir</span> © 2023 DeepRat. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Particles.js with terminal-style particles
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#00ff41"
+                    },
+                    "shape": {
+                        "type": "char",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        },
+                        "character": {
+                            "value": ["0", "1", ">", "_", "#", "$", "*"],
+                            "font": "Courier",
+                            "style": "",
+                            "weight": "400"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 10,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#00ff41",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.5
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add typing animation to console output
+            const consoleOutput = document.querySelector('.console-output');
+            if (consoleOutput) {
+                const originalContent = consoleOutput.innerHTML;
+                consoleOutput.innerHTML = '';
+
+                let i = 0;
+                const speed = 20;
+
+                function typeWriter() {
+                    if (i < originalContent.length) {
+                        consoleOutput.innerHTML += originalContent.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+
+                setTimeout(typeWriter, 1000);
+            }
+
+            // Language switcher functionality
+            const languageBtn = document.getElementById('languageBtn');
+            const mobileLanguageBtn = document.getElementById('mobileLanguageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            if (languageBtn && languageDropdown) {
+                languageBtn.addEventListener('click', () => {
+                    languageDropdown.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                        languageDropdown.classList.remove('active');
+                    }
+                });
+            }
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const lang = option.getAttribute('data-lang');
+                    // Keep updating button text
+                    if (languageBtn) {
+                        languageBtn.querySelector('span').textContent = lang.toUpperCase();
+                    }
+                    if (mobileLanguageBtn) {
+                        mobileLanguageBtn.querySelector('span').textContent = lang.toUpperCase();
+                    }
+                    languageDropdown.classList.remove('active');
+                    
+                    // Redirect based on selected language
+                    if (lang === 'es') {
+                        window.location.href = 'index-es.html';
+                    } else if (lang === 'en') {
+                        window.location.href = 'index.html';
+                    }
+                });
+            });
+
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const overlay = document.getElementById('overlay');
+            
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose && overlay) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                    overlay.classList.add('active');
+                });
+                
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+                
+                overlay.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
