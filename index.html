@@ -16,7 +16,7 @@
             --light: #e0e0e0;
             --terminal: #0d0208;
         }
-        
+
         body {
             font-family: 'Source Code Pro', monospace;
             background-color: var(--terminal);
@@ -24,7 +24,7 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-        
+
         #particles-js {
             position: absolute;
             width: 100%;
@@ -34,28 +34,28 @@
             z-index: 0;
             opacity: 0.3;
         }
-        
+
         .content {
             position: relative;
             z-index: 1;
         }
-        
+
         .terminal-text {
             color: var(--primary);
             text-shadow: 0 0 3px var(--primary);
         }
-        
+
         .terminal-bg {
             background-color: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
-        
+
         .terminal-border {
             border: 1px solid var(--primary);
             position: relative;
         }
-        
+
         .terminal-border::before {
             content: '';
             position: absolute;
@@ -67,73 +67,73 @@
             z-index: -1;
             pointer-events: none;
         }
-        
+
         .prompt {
             color: var(--secondary);
         }
-        
+
         .command {
             color: var(--primary);
         }
-        
+
         .blinking-cursor {
             animation: blink 1s step-end infinite;
         }
-        
+
         @keyframes blink {
             from, to { opacity: 1 }
             50% { opacity: 0 }
         }
-        
+
         .typewriter {
             overflow: hidden;
             white-space: nowrap;
             animation: typing 3.5s steps(40, end);
         }
-        
+
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
-        
+
         .tech-chip {
             background: rgba(0, 255, 65, 0.1);
             border: 1px solid var(--primary);
             transition: all 0.3s ease;
             font-size: 0.85rem;
         }
-        
+
         .tech-chip:hover {
             background: rgba(0, 255, 65, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 0 5px var(--primary);
         }
-        
+
         .project-card {
             background: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             transition: all 0.3s ease;
             position: relative;
         }
-        
+
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
         }
-        
+
         .contact-input {
             background: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             color: var(--light);
             transition: all 0.3s ease;
         }
-        
+
         .contact-input:focus {
             outline: none;
             border-color: var(--secondary);
             box-shadow: 0 0 5px var(--secondary);
         }
-        
+
         .status-bar {
             height: 30px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -144,23 +144,23 @@
             color: var(--terminal);
             font-weight: bold;
         }
-        
+
         .window-controls {
             display: flex;
             gap: 8px;
             margin-right: 10px;
         }
-        
+
         .window-control {
             width: 12px;
             height: 12px;
             border-radius: 50%;
         }
-        
+
         .close { background-color: #ff5f56; }
         .minimize { background-color: #ffbd2e; }
         .maximize { background-color: #27c93f; }
-        
+
         .tab {
             padding: 5px 15px;
             border: 1px solid var(--primary);
@@ -169,11 +169,11 @@
             margin-right: 5px;
             cursor: pointer;
         }
-        
+
         .tab.active {
             background: rgba(0, 255, 65, 0.3);
         }
-        
+
         .console-output {
             height: auto;
             max-height: none;
@@ -183,25 +183,25 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
-        
+
         .console-output::-webkit-scrollbar {
             width: 5px;
         }
-        
+
         .console-output::-webkit-scrollbar-track {
             background: rgba(0, 255, 65, 0.1);
         }
-        
+
         .console-output::-webkit-scrollbar-thumb {
             background: var(--primary);
         }
-        
+
         .command-line {
             display: flex;
             align-items: center;
             padding: 0 15px 15px 15px;
         }
-        
+
         .command-line input {
             flex-grow: 1;
             background: transparent;
@@ -210,15 +210,15 @@
             font-family: 'Source Code Pro', monospace;
             padding-left: 10px;
         }
-        
+
         .command-line input:focus {
             outline: none;
         }
-        
+
         .glow-text {
             text-shadow: 0 0 5px var(--primary);
         }
-        
+
         .ascii-art {
             font-family: monospace;
             white-space: pre;
@@ -228,11 +228,11 @@
             text-align: center;
             margin: 10px 0;
         }
-        
+
         .rat-animation {
             animation: rat-scroll 10s linear infinite;
         }
-        
+
         @keyframes rat-scroll {
             0% { transform: translateY(0); }
             100% { transform: translateY(-100%); }
@@ -249,6 +249,132 @@
             font-size: 0.75rem;
             font-weight: bold;
         }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 100vh;
+            background-color: var(--terminal);
+            z-index: 100;
+            border-left: 1px solid var(--primary);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu-close {
+            align-self: flex-end;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Language switcher */
+        .language-switcher {
+            position: relative;
+            z-index: 10;
+        }
+
+        .language-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--terminal);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            display: none;
+            min-width: 120px;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-option:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .project-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .tech-stack {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .console-output {
+                font-size: 0.7rem;
+            }
+            
+            .ascii-art {
+                font-size: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -259,16 +385,52 @@
             <div class="text-2xl font-bold terminal-text">
                 <span class="prompt">$</span> <span class="command">deeprat</span><span class="blinking-cursor">_</span>
             </div>
-            <div class="hidden md:flex space-x-8">
+            <div class="hidden md:flex space-x-8 items-center">
                 <a href="#about" class="hover:text-primary transition"><span class="prompt">></span> about</a>
                 <a href="#work" class="hover:text-primary transition"><span class="prompt">></span> projects</a>
                 <a href="#contact" class="hover:text-primary transition"><span class="prompt">></span> contact</a>
+                <div class="language-switcher">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>EN</span>
+                        <i class="fas fa-caret-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="es">Español</div>
+                    </div>
+                </div>
             </div>
-            <button class="md:hidden">
-                <i class="fas fa-bars text-2xl terminal-text"></i>
-            </button>
+            <div class="flex items-center md:hidden">
+                <div class="language-switcher mr-4">
+                    <button class="language-btn" id="mobileLanguageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>EN</span>
+                    </button>
+                </div>
+                <button id="mobileMenuBtn">
+                    <i class="fas fa-bars text-2xl terminal-text"></i>
+                </button>
+            </div>
         </nav>
-        
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-close" id="mobileMenuClose">
+                    <i class="fas fa-times terminal-text"></i>
+                </div>
+                <a href="#about" class="hover:text-primary transition text-xl"><span class="prompt">></span> about</a>
+                <a href="#work" class="hover:text-primary transition text-xl"><span class="prompt">></span> projects</a>
+                <a href="#contact" class="hover:text-primary transition text-xl"><span class="prompt">></span> contact</a>
+                <div class="pt-4 border-t border-primary mt-4">
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="es">Español</div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" id="overlay"></div>
+
         <!-- Hero Section -->
         <section class="container mx-auto px-6 py-20 md:py-32">
             <div class="flex flex-col lg:flex-row items-center gap-12">
@@ -278,7 +440,7 @@
                     <h2 class="text-xl md:text-2xl text-gray-300 mb-8 typewriter">
                         <span class="prompt">$</span> AI Engineer & Data Scientist
                     </h2>
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 hero-buttons">
                         <a href="#work" class="px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
                             <span class="prompt">$</span> explore_projects
                         </a>
@@ -297,8 +459,8 @@
                             </div>
                             <span>deeprat_console</span>
                         </div>
-                        <div class="console-output terminal-border">                            
-  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                        <div class="console-output terminal-border">
+                              ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠶⠛⠉⠉⠻⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠟⠁⠀⠀⠀⠀⠀⢹⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⠀⠀⠀⠀⠀⢸⡟⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -326,10 +488,7 @@
 ⠀⠀⠀⠀⠀⢠⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠦⠴⠞⠛⠉⠉⠉⠀⠀⠀⠘⡄⠀⠘⢦⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠘⠆⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠈⠳⠄⠀⠀⠀⠀⠀⠈⠳⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                                                                                      
-                                                                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  
-                        </div>
-                        <div class="command-line">
+                            <div class="command-line">
                             <span class="prompt">$</span>
                             <input type="text" value="welcome --gui" readonly>
                         </div>
@@ -337,7 +496,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- About Section -->
         <section id="about" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -365,7 +524,7 @@
                             <h3 class="text-xl font-bold mb-4 terminal-text">
                                 <span class="prompt">$</span> <span class="command">ls</span> -l tech_stack/
                             </h3>
-                            <div class="flex flex-wrap gap-3">
+                            <div class="flex flex-wrap gap-3 tech-stack">
                                 <span class="tech-chip px-4 py-2 rounded">Python</span>
                                 <span class="tech-chip px-4 py-2 rounded">PyTorch</span>
                                 <span class="tech-chip px-4 py-2 rounded">TensorFlow</span>
@@ -390,7 +549,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Work Section -->
         <section id="work" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -430,7 +589,7 @@
                                 </a>
                             </div>
                         </div>
-                        
+
                         <!-- Project 2 -->
                         <div class="project-card p-6 rounded">
                             <div class="flex items-center mb-4">
@@ -449,7 +608,7 @@
                                 <span class="prompt">$</span> <span class="command">open</span> github
                             </a>
                         </div>
-                        
+
                         <!-- Project 3 -->
                         <div class="project-card p-6 rounded">
                             <div class="flex items-center mb-4">
@@ -469,7 +628,7 @@
                                 <span class="prompt">$</span> <span class="command">open</span> github
                             </a>
                         </div>
-                        
+
                         <!-- Project 4 -->
                         <div class="project-card p-6 rounded">
                             <div class="flex items-center mb-4">
@@ -493,7 +652,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Contact Section -->
          <section id="contact" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -515,21 +674,21 @@
                         </h3>
                         <p class="text-gray-400"><span class="prompt">$</span> I'm currently looking for new opportunities in AI engineering and data science. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
                     </div>
-                    
+
                     <div class="max-w-2xl mx-auto">
                         <form id="contactForm"
                               action="https://formsubmit.co/info@deeprat.tech"
                               method="POST"
                               class="space-y-6">
-                            
+
                             <!-- Honeypot antispam -->
                             <input type="text" name="_honey" style="display:none">
-                            
+
                             <!-- Personalización FormSubmit -->
                             <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde formulario DeepRat">
                             <input type="hidden" name="_next"    value="https://deeprat.tech/gracias.html">
                             <input type="hidden" name="_captcha" value="false">
-    
+
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-400 mb-2">
                                     <span class="prompt">$</span> Name:
@@ -552,7 +711,7 @@
                                 <span class="prompt">$</span> <span class="command">send_message</span>
                             </button>
                         </form>
-                        
+
                         <div class="mt-12 flex justify-center space-x-6">
                             <a href="https://github.com/DeepRatAI" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
                                 <span class="prompt">$</span> <span class="command">github</span>
@@ -568,13 +727,13 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Footer -->
         <footer class="container mx-auto px-6 py-8 text-center text-gray-500 text-sm terminal-bg">
             <p><span class="prompt">$</span> <span class="command">exit</span> © 2023 DeepRat. All rights reserved.</p>
         </footer>
     </div>
-    
+
     <script>
         // Initialize Particles.js with terminal-style particles
         document.addEventListener('DOMContentLoaded', function() {
@@ -689,27 +848,27 @@
                 },
                 "retina_detect": true
             });
-            
+
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
                     });
                 });
             });
-            
+
             // Add typing animation to console output
             const consoleOutput = document.querySelector('.console-output');
             if (consoleOutput) {
                 const originalContent = consoleOutput.innerHTML;
                 consoleOutput.innerHTML = '';
-                
+
                 let i = 0;
                 const speed = 20;
-                
+
                 function typeWriter() {
                     if (i < originalContent.length) {
                         consoleOutput.innerHTML += originalContent.charAt(i);
@@ -717,8 +876,71 @@
                         setTimeout(typeWriter, speed);
                     }
                 }
-                
+
                 setTimeout(typeWriter, 1000);
+            }
+
+            // Language switcher functionality
+            const languageBtn = document.getElementById('languageBtn');
+            const mobileLanguageBtn = document.getElementById('mobileLanguageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            if (languageBtn && languageDropdown) {
+                languageBtn.addEventListener('click', () => {
+                    languageDropdown.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                        languageDropdown.classList.remove('active');
+                    }
+                });
+            }
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const lang = option.getAttribute('data-lang');
+                    // Keep updating button text
+                    if (languageBtn) {
+                        languageBtn.querySelector('span').textContent = lang.toUpperCase();
+                    }
+                    if (mobileLanguageBtn) {
+                        mobileLanguageBtn.querySelector('span').textContent = lang.toUpperCase();
+                    }
+                    languageDropdown.classList.remove('active');
+                    
+                    // Redirect based on selected language
+                    if (lang === 'es') {
+                        window.location.href = 'index-es.html';
+                    } else if (lang === 'en') {
+                        window.location.href = 'index.html';
+                    }
+                });
+            });
+
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const overlay = document.getElementById('overlay');
+            
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose && overlay) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                    overlay.classList.add('active');
+                });
+                
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+                
+                overlay.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
             }
         });
     </script>
