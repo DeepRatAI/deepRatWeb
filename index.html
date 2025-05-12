@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepRat | AI Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --dark: #0a0a0a;
+            --light: #e0e0e0;
+            --terminal: #0d0208;
+        }
+        
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: var(--terminal);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .terminal-text {
+            color: var(--primary);
+            text-shadow: 0 0 3px var(--primary);
+        }
+        
+        .terminal-bg {
+            background-color: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        
+        .terminal-border {
+            border: 1px solid var(--primary);
+            position: relative;
+        }
+        
+        .terminal-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid var(--secondary);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .prompt {
+            color: var(--secondary);
+        }
+        
+        .command {
+            color: var(--primary);
+        }
+        
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1 }
+            50% { opacity: 0 }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .tech-chip {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .tech-chip:hover {
+            background: rgba(0, 255, 65, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 5px var(--primary);
+        }
+        
+        .project-card {
+            background: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+        
+        .contact-input {
+            background: rgba(13, 2, 8, 0.9);
+            border: 1px solid var(--primary);
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 5px var(--secondary);
+        }
+        
+        .status-bar {
+            height: 30px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--terminal);
+            font-weight: bold;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            margin-right: 10px;
+        }
+        
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+        
+        .tab {
+            padding: 5px 15px;
+            border: 1px solid var(--primary);
+            border-bottom: none;
+            background: rgba(0, 255, 65, 0.1);
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        
+        .tab.active {
+            background: rgba(0, 255, 65, 0.3);
+        }
+        
+        .console-output {
+            height: auto;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .console-output::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .console-output::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.1);
+        }
+        
+        .console-output::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        }
+        
+        .command-line {
+            display: flex;
+            align-items: center;
+            padding: 0 15px 15px 15px;
+        }
+        
+        .command-line input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-family: 'Source Code Pro', monospace;
+            padding-left: 10px;
+        }
+        
+        .command-line input:focus {
+            outline: none;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 5px var(--primary);
+        }
+        
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.3;
+            color: var(--primary);
+            font-size: 0.6rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .rat-animation {
+            animation: rat-scroll 10s linear infinite;
+        }
+        
+        @keyframes rat-scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: var(--terminal);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="content">
+        <!-- Navigation -->
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center terminal-bg">
+            <div class="text-2xl font-bold terminal-text">
+                <span class="prompt">$</span> <span class="command">deeprat</span><span class="blinking-cursor">_</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="hover:text-primary transition"><span class="prompt">></span> about</a>
+                <a href="#work" class="hover:text-primary transition"><span class="prompt">></span> projects</a>
+                <a href="#contact" class="hover:text-primary transition"><span class="prompt">></span> contact</a>
+            </div>
+            <button class="md:hidden">
+                <i class="fas fa-bars text-2xl terminal-text"></i>
+            </button>
+        </nav>
+        
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 py-20 md:py-32">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <p class="text-secondary mb-4"><span class="prompt">$</span> Hi, I'm DeepRat — your AI lab rat.</p>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-4 terminal-text glow-text">Gonzalo Romero</h1>
+                    <h2 class="text-xl md:text-2xl text-gray-300 mb-8 typewriter">
+                        <span class="prompt">$</span> AI Engineer & Data Scientist
+                    </h2>
+                    <div class="flex space-x-4">
+                        <a href="#work" class="px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                            <span class="prompt">$</span> explore_projects
+                        </a>
+                        <a href="#contact" class="px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                            <span class="prompt">$</span> get_in_touch
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <div class="terminal-bg p-4 rounded w-full">
+                        <div class="status-bar">
+                            <div class="window-controls">
+                                <div class="window-control close"></div>
+                                <div class="window-control minimize"></div>
+                                <div class="window-control maximize"></div>
+                            </div>
+                            <span>deeprat_console</span>
+                        </div>
+                        <div class="console-output terminal-border">
+                            <div class="ascii-art">
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣤⣄⡀⠀⠀⠀⠀⠙⢮⣧⠀⡀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣸⣄⣤⣿⠷⠿⠟⣶⠶⠶⠛⠛⠓⢲⡄⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠿⠿⢿⡛⣦⠀⠀⠀⣾⡯⠀⠀⣶⣀⣾⠇⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⠼⣴⣶⣤⣾⡟⠀⠀⠀⠈⠀⠀⢀⣿⡿⣷⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⡶⠒⠛⠉⠉⠉⠉⠁⠀⠀⠉⠉⠛⠁⠀⠀⠀⢀⣠⠖⢫⠏⡇⢻⠳⠄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠚⠁⠀⠊⠀⠃⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠀⠀⠀⣶⢿⣝⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠿⣤⣀⠈⠳⢦⡝⠿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠏⠈⠙⢶⣾⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠁⠀⠀⠀⠘⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣠⠤⠔⠋⠀⣠⣾⡇⠀⠀⠀⠀⠀⠀⣠⡾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣀⣀⣀⣀⣤⣤⣤⣴⣖⣒⣒⣛⣛⣉⣉⣉⣤⡤⠤⠤⠔⠚⠿⠛⣷⡀⠀⢀⣤⢶⣟⠯⠤⠤⠤⢤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣇⠘⢧⣄⠀⠉⠛⠒⠒⠒⠶⡍⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠳⢬⣉⣙⣿⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠉⠙⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                            </div>
+                            <p><span class="prompt">$</span> <span class="command">load_profile</span> --user=deeprat</p>
+                            <p>Initializing neural matrix...</p>
+                            <p>Loading expertise modules:</p>
+                            <p>- Generative AI: ██████████ 100%</p>
+                            <p>- NLP: ██████████ 100%</p>
+                            <p>- Computer Vision: ██████████ 100%</p>
+                            <p>Profile loaded successfully.</p>
+                            <p class="text-secondary">System ready.</p>
+                        </div>
+                        <div class="command-line">
+                            <span class="prompt">$</span>
+                            <input type="text" value="welcome --gui" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>about_me.txt</span>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 terminal-text">
+                        <span class="prompt">$</span> <span class="command">cat</span> about_me.txt
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> Hi! I'm Gonzalo, also known as DeepRat.</p>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> My passion for science began at age 6 with Carl Sagan's Cosmos.</p>
+                            <p class="text-gray-300 mb-4"><span class="prompt">$</span> Since then I've explored every branch of knowledge until I found my home in Artificial Intelligence.</p>
+                            <p class="text-gray-300 mb-6"><span class="prompt">$</span> Today I'm an IBM-certified AI Engineer and Systems Engineering student at UTN, specializing in Generative AI, NLP and Computer Vision.</p>
+                            <p class="text-gray-300"><span class="prompt">$</span> I spend practically all my time reading articles and experimenting in notebooks—I basically talk to chatbots all day!</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 terminal-text">
+                                <span class="prompt">$</span> <span class="command">ls</span> -l tech_stack/
+                            </h3>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="tech-chip px-4 py-2 rounded">Python</span>
+                                <span class="tech-chip px-4 py-2 rounded">PyTorch</span>
+                                <span class="tech-chip px-4 py-2 rounded">TensorFlow</span>
+                                <span class="tech-chip px-4 py-2 rounded">Keras</span>
+                                <span class="tech-chip px-4 py-2 rounded">HuggingFace</span>
+                                <span class="tech-chip px-4 py-2 rounded">SentenceTransformers</span>
+                                <span class="tech-chip px-4 py-2 rounded">StableDiffusion</span>
+                                <span class="tech-chip px-4 py-2 rounded">FAISS</span>
+                                <span class="tech-chip px-4 py-2 rounded">LangChain</span>
+                                <span class="tech-chip px-4 py-2 rounded">FastAPI</span>
+                                <span class="tech-chip px-4 py-2 rounded">Streamlit</span>
+                                <span class="tech-chip px-4 py-2 rounded">Gradio</span>
+                                <span class="tech-chip px-4 py-2 rounded">ColabPro</span>
+                                <span class="tech-chip px-4 py-2 rounded">Git</span>
+                                <span class="tech-chip px-4 py-2 rounded">GitHub</span>
+                                <span class="tech-chip px-4 py-2 rounded">DVC</span>
+                                <span class="tech-chip px-4 py-2 rounded">MLflow</span>
+                                <span class="tech-chip px-4 py-2 rounded">HTML/CSS/JS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Work Section -->
+        <section id="work" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>projects/</span>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 terminal-text">
+                        <span class="prompt">$</span> <span class="command">cd</span> projects/
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Project 1 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-robot terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">RAG Chatbot Benchmark</h3>
+                            </div>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Comprehensive latency & generative-quality comparison of Phi-2 and LLaMA-2-based RAG chatbots on T4, L4 & A100 GPUs, measuring BERTScore & ROUGE-L.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLM</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Benchmarking</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <a href="https://github.com/DeepRatAI/RAGbotBenchmark_Gcolab" target="_blank" class="terminal-text hover:underline flex items-center">
+                                    <span class="prompt">$</span> <span class="command">open</span> github
+                                </a>
+                                <a href="https://www.linkedin.com/pulse/rag-colab-hands-on-benchmarking-phi-2-llama-2-t4-vs-a100-romero-zvrgf" target="_blank" class="terminal-text hover:underline flex items-center">
+                                    <span class="prompt">$</span> <span class="command">open</span> article
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 2 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-graduation-cap terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">Mole "Dive into it!"</h3>
+                            </div>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> RAG educational assistant that extracts knowledge from your documents to generate academic summaries and answer questions in Insightful or Expert modes (FAISS + LLaMA).</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Education</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLaMA</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/Mole_v1" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">open</span> github
+                            </a>
+                        </div>
+                        
+                        <!-- Project 3 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-eye terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">TrueEye</h3>
+                            </div>
+                            <span class="coming-soon">COMING SOON</span>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Multimodal Misinformation Detector: AI platform that analyzes text and images from URLs to classify real/fake news into seven categories with natural-language explanations.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">NLP</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">CV</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Misinformation</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/TrueEye" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">open</span> github
+                            </a>
+                        </div>
+                        
+                        <!-- Project 4 -->
+                        <div class="project-card p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-book terminal-text"></i>
+                                </div>
+                                <h3 class="text-xl font-bold terminal-text">VernnEdX</h3>
+                            </div>
+                            <span class="coming-soon">COMING SOON</span>
+                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Narrative Science: Turn scientific questions into literary stories with comic-style vignettes.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Creative AI</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Education</span>
+                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Storytelling</span>
+                            </div>
+                            <a href="https://github.com/DeepRatAI/VernnEd-X" target="_blank" class="terminal-text hover:underline flex items-center">
+                                <span class="prompt">$</span> <span class="command">open</span> github
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto px-6 py-20">
+            <div class="terminal-bg p-6 rounded">
+                <div class="status-bar">
+                    <div class="window-controls">
+                        <div class="window-control close"></div>
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                    </div>
+                    <span>contact_form.py</span>
+                </div>
+                <div class="p-6">
+                    <div class="max-w-3xl mx-auto text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 terminal-text">
+                            <span class="prompt">$</span> <span class="command">whats_next</span>
+                        </h2>
+                        <h3 class="text-xl md:text-2xl mb-4 terminal-text">
+                            <span class="prompt">$</span> Get In Touch
+                        </h3>
+                        <p class="text-gray-400"><span class="prompt">$</span> I'm currently looking for new opportunities in AI engineering and data science. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
+                    </div>
+                    
+                    <div class="max-w-2xl mx-auto">
+                        <form id="contactForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-400 mb-2"><span class="prompt">$</span> Name:</label>
+                                <input type="text" id="name" name="name" class="contact-input w-full px-4 py-3 rounded" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-400 mb-2"><span class="prompt">$</span> Email:</label>
+                                <input type="email" id="email" name="email" class="contact-input w-full px-4 py-3 rounded" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-400 mb-2"><span class="prompt">$</span> Message:</label>
+                                <textarea id="message" name="message" rows="5" class="contact-input w-full px-4 py-3 rounded" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 terminal-border font-medium hover:bg-primary hover:bg-opacity-10 transition">
+                                <span class="prompt">$</span> <span class="command">send_message</span>
+                            </button>
+                        </form>
+                        
+                        <div class="mt-12 flex justify-center space-x-6">
+                            <a href="https://github.com/DeepRatAI" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">github</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/gonzalo-luis-romero-b9b5b4355" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">linkedin</span>
+                            </a>
+                            <a href="mailto:info@deeprat.tech" class="terminal-text hover:text-secondary transition text-xl">
+                                <span class="prompt">$</span> <span class="command">email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="container mx-auto px-6 py-8 text-center text-gray-500 text-sm terminal-bg">
+            <p><span class="prompt">$</span> <span class="command">exit</span> © 2023 DeepRat. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Initialize Particles.js with terminal-style particles
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#00ff41"
+                    },
+                    "shape": {
+                        "type": "char",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        },
+                        "character": {
+                            "value": ["0", "1", ">", "_", "#", "$", "*"],
+                            "font": "Courier",
+                            "style": "",
+                            "weight": "400"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 10,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#00ff41",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.5
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Create a console-like output
+                const output = `
+<span class="prompt">$</span> <span class="command">sendmail</span> --to=info@deeprat.tech
+<span class="text-secondary">Connecting to SMTP server...</span>
+<span class="text-secondary">Authentication successful.</span>
+<span class="text-secondary">Message queued for delivery.</span>
+<span class="prompt">$</span> <span class="command">status</span> --message=success
+<span class="text-primary">Message sent successfully!</span>
+
+<span class="prompt">$</span> <span class="command">echo</span> "Name: ${name}"
+<span class="prompt">$</span> <span class="command">echo</span> "Email: ${email}"
+<span class="prompt">$</span> <span class="command">echo</span> "Message: ${message}"
+                `;
+                
+                // Show output in a console-like alert
+                const alertBox = document.createElement('div');
+                alertBox.className = 'terminal-bg p-6 rounded fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 max-w-lg w-full';
+                alertBox.innerHTML = `
+                    <div class="status-bar">
+                        <div class="window-controls">
+                            <div class="window-control close" onclick="this.parentElement.parentElement.parentElement.remove()"></div>
+                        </div>
+                        <span>message_status</span>
+                    </div>
+                    <div class="console-output terminal-border mt-4" style="height: auto; max-height: 60vh; overflow-y: auto;">
+                        ${output}
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button onclick="this.parentElement.parentElement.remove()" class="px-4 py-2 terminal-border">
+                            <span class="prompt">$</span> <span class="command">close</span>
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(alertBox);
+                
+                // Reset form
+                this.reset();
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Add typing animation to console output
+            const consoleOutput = document.querySelector('.console-output');
+            if (consoleOutput) {
+                const originalContent = consoleOutput.innerHTML;
+                consoleOutput.innerHTML = '';
+                
+                let i = 0;
+                const speed = 20;
+                
+                function typeWriter() {
+                    if (i < originalContent.length) {
+                        consoleOutput.innerHTML += originalContent.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                
+                setTimeout(typeWriter, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
