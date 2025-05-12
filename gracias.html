@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Received - Thank You!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary: #00ff9d;
+            --secondary: #00b8ff;
+            --bg: #0a0a0a;
+            --terminal-bg: #111111;
+            --text: #f0f0f0;
+        }
+        
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        .terminal {
+            background-color: var(--terminal-bg);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .btn-red { background-color: #ff5f56; }
+        .btn-yellow { background-color: #ffbd2e; }
+        .btn-green { background-color: #27c93f; }
+        
+        .terminal-title {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .prompt {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+        
+        .command {
+            color: var(--secondary);
+        }
+        
+        .typing-effect {
+            border-right: 2px solid var(--primary);
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
+        }
+        
+        .success-icon {
+            color: var(--primary);
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-screen">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+                <div class="terminal-title">message-confirmation</div>
+            </div>
+            
+            <div class="terminal-content">
+                <div class="flex flex-col items-center justify-center text-center py-8">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <div id="typing-container" class="text-left w-full">
+                        <div class="mb-4">
+                            <span class="prompt">$</span> 
+                            <span class="command">message_status</span>
+                        </div>
+                        <div id="typing-text" class="typing-effect"></div>
+                    </div>
+                    
+                    <a href="/" class="home-btn">
+                        <i class="fas fa-home mr-2"></i> Return to Terminal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© <span id="year"></span> Terminal Portfolio. All systems operational.</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const messages = [
+            "Message successfully transmitted to server...",
+            "Encryption protocols engaged...",
+            "Verifying sender credentials...",
+            "Message contents validated...",
+            "Thank you for reaching out!",
+            "Your message has been received and I'll get back to you soon.",
+            "In the meantime, feel free to explore more of my work."
+        ];
+        
+        const typingText = document.getElementById('typing-text');
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isEnd = false;
+        
+        function type() {
+            const currentMessage = messages[messageIndex];
+            
+            if (isDeleting) {
+                typingText.textContent = currentMessage.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentMessage.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            if (!isDeleting && charIndex === currentMessage.length) {
+                if (messageIndex === messages.length - 1) {
+                    isEnd = true;
+                    typingText.classList.remove('typing-effect');
+                    return;
+                }
+                
+                isDeleting = true;
+                setTimeout(type, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                messageIndex++;
+                setTimeout(type, 300);
+            } else {
+                const speed = isDeleting ? 50 : 50 + Math.random() * 50;
+                setTimeout(type, speed);
+            }
+        }
+        
+        // Start typing effect after a short delay
+        setTimeout(type, 1000);
+    </script>
+</body>
+</html>
