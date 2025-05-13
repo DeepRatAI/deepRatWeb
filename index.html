@@ -349,32 +349,36 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .hero-buttons {
-                flex-direction: column;
-                gap: 1rem;
+            .ascii-art {
+                font-size: 0.35rem;
+                line-height: 0.8;
+                white-space: pre-wrap;
+                overflow-wrap: break-word;
+                max-width: 100%;
+                padding: 0 5px;
+                display: block;
             }
-            
+
+            .console-output {
+                overflow-x: auto;
+                max-width: 100%;
+                font-size: 0.7rem;
+            }
+
             .hero-buttons a {
                 width: 100%;
                 text-align: center;
             }
-            
+
             .project-card {
                 margin-bottom: 1.5rem;
             }
-            
+
             .tech-stack {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .console-output {
-                font-size: 0.7rem;
-            }
-            
-            .ascii-art {
-                font-size: 0.5rem;
-            }
         }
+
     </style>
 </head>
 <body>
