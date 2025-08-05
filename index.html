@@ -16,7 +16,6 @@
             --light: #e0e0e0;
             --terminal: #0d0208;
         }
-
         body {
             font-family: 'Source Code Pro', monospace;
             background-color: var(--terminal);
@@ -24,7 +23,6 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-
         #particles-js {
             position: absolute;
             width: 100%;
@@ -34,28 +32,23 @@
             z-index: 0;
             opacity: 0.3;
         }
-
         .content {
             position: relative;
             z-index: 1;
         }
-
         .terminal-text {
             color: var(--primary);
             text-shadow: 0 0 3px var(--primary);
         }
-
         .terminal-bg {
             background-color: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
-
         .terminal-border {
             border: 1px solid var(--primary);
             position: relative;
         }
-
         .terminal-border::before {
             content: '';
             position: absolute;
@@ -67,73 +60,60 @@
             z-index: -1;
             pointer-events: none;
         }
-
         .prompt {
             color: var(--secondary);
         }
-
         .command {
             color: var(--primary);
         }
-
         .blinking-cursor {
             animation: blink 1s step-end infinite;
         }
-
         @keyframes blink {
             from, to { opacity: 1 }
             50% { opacity: 0 }
         }
-
         .typewriter {
             overflow: hidden;
             white-space: nowrap;
             animation: typing 3.5s steps(40, end);
         }
-
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
-
         .tech-chip {
             background: rgba(0, 255, 65, 0.1);
             border: 1px solid var(--primary);
             transition: all 0.3s ease;
             font-size: 0.85rem;
         }
-
         .tech-chip:hover {
             background: rgba(0, 255, 65, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 0 5px var(--primary);
         }
-
         .project-card {
             background: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             transition: all 0.3s ease;
             position: relative;
         }
-
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
         }
-
         .contact-input {
             background: rgba(13, 2, 8, 0.9);
             border: 1px solid var(--primary);
             color: var(--light);
             transition: all 0.3s ease;
         }
-
         .contact-input:focus {
             outline: none;
             border-color: var(--secondary);
             box-shadow: 0 0 5px var(--secondary);
         }
-
         .status-bar {
             height: 30px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -144,23 +124,19 @@
             color: var(--terminal);
             font-weight: bold;
         }
-
         .window-controls {
             display: flex;
             gap: 8px;
             margin-right: 10px;
         }
-
         .window-control {
             width: 12px;
             height: 12px;
             border-radius: 50%;
         }
-
         .close { background-color: #ff5f56; }
         .minimize { background-color: #ffbd2e; }
         .maximize { background-color: #27c93f; }
-
         .tab {
             padding: 5px 15px;
             border: 1px solid var(--primary);
@@ -169,11 +145,9 @@
             margin-right: 5px;
             cursor: pointer;
         }
-
         .tab.active {
             background: rgba(0, 255, 65, 0.3);
         }
-
         .console-output {
             height: auto;
             max-height: none;
@@ -183,25 +157,20 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
-
         .console-output::-webkit-scrollbar {
             width: 5px;
         }
-
         .console-output::-webkit-scrollbar-track {
             background: rgba(0, 255, 65, 0.1);
         }
-
         .console-output::-webkit-scrollbar-thumb {
             background: var(--primary);
         }
-
         .command-line {
             display: flex;
             align-items: center;
             padding: 0 15px 15px 15px;
         }
-
         .command-line input {
             flex-grow: 1;
             background: transparent;
@@ -210,15 +179,12 @@
             font-family: 'Source Code Pro', monospace;
             padding-left: 10px;
         }
-
         .command-line input:focus {
             outline: none;
         }
-
         .glow-text {
             text-shadow: 0 0 5px var(--primary);
         }
-
         .ascii-art {
             font-family: monospace;
             white-space: pre;
@@ -228,16 +194,13 @@
             text-align: center;
             margin: 10px 0;
         }
-
         .rat-animation {
             animation: rat-scroll 10s linear infinite;
         }
-
         @keyframes rat-scroll {
             0% { transform: translateY(0); }
             100% { transform: translateY(-100%); }
         }
-
         .coming-soon {
             position: absolute;
             top: 10px;
@@ -249,7 +212,6 @@
             font-size: 0.75rem;
             font-weight: bold;
         }
-
         /* Mobile menu styles */
         .mobile-menu {
             display: none;
@@ -264,24 +226,20 @@
             transform: translateX(100%);
             transition: transform 0.3s ease;
         }
-
         .mobile-menu.active {
             transform: translateX(0);
         }
-
         .mobile-menu-content {
             padding: 2rem;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
-
         .mobile-menu-close {
             align-self: flex-end;
             font-size: 1.5rem;
             cursor: pointer;
         }
-
         .overlay {
             display: none;
             position: fixed;
@@ -292,17 +250,14 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 50;
         }
-
         .overlay.active {
             display: block;
         }
-
         /* Language switcher */
         .language-switcher {
             position: relative;
             z-index: 10;
         }
-
         .language-btn {
             background: transparent;
             border: 1px solid var(--primary);
@@ -315,11 +270,9 @@
             gap: 0.5rem;
             transition: all 0.3s ease;
         }
-
         .language-btn:hover {
             background: rgba(0, 255, 65, 0.1);
         }
-
         .language-dropdown {
             position: absolute;
             right: 0;
@@ -332,21 +285,17 @@
             display: none;
             min-width: 120px;
         }
-
         .language-dropdown.active {
             display: block;
         }
-
         .language-option {
             padding: 0.5rem 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .language-option:hover {
             background: rgba(0, 255, 65, 0.1);
         }
-
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .ascii-art {
@@ -358,27 +307,85 @@
                 padding: 0 5px;
                 display: block;
             }
-
             .console-output {
                 overflow-x: auto;
                 max-width: 100%;
                 font-size: 0.7rem;
             }
-
             .hero-buttons a {
                 width: 100%;
                 text-align: center;
             }
-
             .project-card {
                 margin-bottom: 1.5rem;
             }
-
             .tech-stack {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-
+        /* Custom styles for project accordion */
+        .project-accordion-header {
+            background-color: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--primary);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        .project-accordion-header:hover {
+            background-color: rgba(0, 255, 65, 0.2);
+        }
+        .project-accordion-content {
+            display: none;
+            padding: 1.5rem;
+            border-left: 1px solid var(--primary);
+            border-right: 1px solid var(--primary);
+            border-bottom: 1px solid var(--primary);
+        }
+        .project-accordion-content.active {
+            display: block;
+        }
+        .project-sub-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(0, 255, 65, 0.2);
+        }
+        .project-sub-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .project-tag {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--terminal);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .project-link {
+            color: var(--primary);
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .project-link:hover {
+            color: var(--secondary);
+        }
+        .project-icon {
+            margin-right: 0.75rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(0, 255, 65, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -417,7 +424,6 @@
                 </button>
             </div>
         </nav>
-
         <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-content">
@@ -434,7 +440,6 @@
             </div>
         </div>
         <div class="overlay" id="overlay"></div>
-
         <!-- Hero Section -->
         <section class="container mx-auto px-6 py-20 md:py-32">
             <div class="flex flex-col lg:flex-row items-center gap-12">
@@ -500,7 +505,6 @@
                 </div>
             </div>
         </section>
-
         <!-- About Section -->
         <section id="about" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -577,7 +581,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Work Section -->
         <section id="work" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -593,96 +596,209 @@
                     <h2 class="text-3xl md:text-4xl font-bold mb-8 terminal-text">
                         <span class="prompt">$</span> <span class="command">cd</span> projects/
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Project 1 - TrueEye (moved to first position) -->
-                        <div class="project-card p-6 rounded">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                                    <i class="fas fa-eye terminal-text"></i>
+                    
+                    <!-- Project Accordion -->
+                    <div class="space-y-4">
+                        <!-- Project ConCiencia Accordion -->
+                        <div class="project-accordion">
+                            <div class="project-accordion-header" onclick="toggleAccordion(this)">
+                                <div class="flex items-center">
+                                    <div class="project-icon">
+                                        <i class="fas fa-brain terminal-text"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold terminal-text">Project ConCiencia</h3>
                                 </div>
-                                <h3 class="text-xl font-bold terminal-text">TrueEye</h3>
+                                <i class="fas fa-chevron-down terminal-text"></i>
                             </div>
-                            <span class="coming-soon">NEW</span>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Cognitive Media Analysis: AI system that detects bias, audience targeting and symbolic manipulation in news articles.</p>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Not just fake news — it analyzes for whom and why the content was written.</p>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Powered by LangFlow + Claude agents + semantic pipelines.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">NLP</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">CV</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Misinformation</span>
+                            <div class="project-accordion-content">
+                                <p class="text-gray-400 mb-4"><span class="prompt">$</span> Project ConCiencia is my umbrella for multidisciplinary R&D.</p>
+                                <p class="text-gray-400 mb-4"><span class="prompt">$</span> I explore the intersection of AI, psychology, sociology, and cognitive science to understand—and ultimately enhance—human behaviour.</p>
+                                
+                                <div class="ml-4 mt-6">
+                                    <p class="text-gray-400 mb-2"><span class="prompt">$</span> • Scope: theoretical research + experimental prototypes</p>
+                                    <p class="text-gray-400 mb-2"><span class="prompt">$</span> • Philosophy: "understand to transform"</p>
+                                    <p class="text-gray-400 mb-4"><span class="prompt">$</span> • Access: papers, datasets, and internal logs are PRIVATE. To request access, email <a href="mailto:info@deeprat.tech" class="project-link">info@deeprat.tech</a></p>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-eye terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">TrueEye</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Media-literacy AI that analyses news, detects bias, and classifies misinformation into seven categories.</p>
+                                                <div class="mt-2">
+                                                    <a href="https://github.com/DeepRatAI/T.R.U.E_E.Y.E." target="_blank" class="project-link mr-4">
+                                                        <i class="fab fa-github mr-1"></i> GitHub
+                                                    </a>
+                                                    <a href="https://trueeye-production.up.railway.app" target="_blank" class="project-link">
+                                                        <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="https://github.com/DeepRatAI/TrueEye_v1" target="_blank" class="terminal-text hover:underline flex items-center">
-                                <span class="prompt">$</span> <span class="command">open</span> github
-                            </a>
                         </div>
-
-                        <!-- Project 2 -->
-                        <div class="project-card p-6 rounded">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                                    <i class="fas fa-robot terminal-text"></i>
+                        
+                        <!-- Xpert Series Accordion -->
+                        <div class="project-accordion">
+                            <div class="project-accordion-header" onclick="toggleAccordion(this)">
+                                <div class="flex items-center">
+                                    <div class="project-icon">
+                                        <i class="fas fa-cogs terminal-text"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold terminal-text">Xpert Series</h3>
                                 </div>
-                                <h3 class="text-xl font-bold terminal-text">RAG Chatbot Benchmark</h3>
+                                <i class="fas fa-chevron-down terminal-text"></i>
                             </div>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Comprehensive latency & generative-quality comparison of Phi-2 and LLaMA-2-based RAG chatbots on T4, L4 & A100 GPUs, measuring BERTScore & ROUGE-L.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLM</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Benchmarking</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
-                            </div>
-                            <div class="flex space-x-4">
-                                <a href="https://github.com/DeepRatAI/RAGbotBenchmark_Gcolab" target="_blank" class="terminal-text hover:underline flex items-center">
-                                    <span class="prompt">$</span> <span class="command">open</span> github
-                                </a>
-                                <a href="https://www.linkedin.com/pulse/rag-colab-hands-on-benchmarking-phi-2-llama-2-t4-vs-a100-romero-zvrgf" target="_blank" class="terminal-text hover:underline flex items-center">
-                                    <span class="prompt">$</span> <span class="command">open</span> article
-                                </a>
+                            <div class="project-accordion-content">
+                                <p class="text-gray-400 mb-4"><span class="prompt">$</span> Xpert Series turns everything I learn into ready-to-ship professional solutions.</p>
+                                <p class="text-gray-400 mb-4"><span class="prompt">$</span> Here, AI leaves the lab and becomes a tool with real-world impact.</p>
+                                
+                                <div class="ml-4 mt-6">
+                                    <p class="text-gray-400 mb-2"><span class="prompt">$</span> • Mission: solve concrete problems and deliver measurable value</p>
+                                    <p class="text-gray-400 mb-2"><span class="prompt">$</span> • Focus: accuracy, reliability, and return on investment</p>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-user-md terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">Medex</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Medical assistant with two versions:</p>
+                                                <ul class="text-gray-400 list-none mt-2 ml-4 space-y-1">
+                                                    <li><span class="prompt">$</span> <strong>v2582 (Lite)</strong> — Assisted diagnosis, basic anamnesis, quick recommendations.</li>
+                                                    <li><span class="prompt">$</span> <strong>v2583 (Full)</strong> — Role detection (doctor/patient), RAG fed with hundreds of medical papers, web access, and more advanced capabilities. Backend fully operational via terminal; UI in development.</li>
+                                                </ul>
+                                                <div class="mt-2">
+                                                    <a href="https://github.com/DeepRat-AI/MedeX_V25.83" target="_blank" class="project-link">
+                                                        <i class="fab fa-github mr-1"></i> GitHub (v2583)
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-code terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">RatCode</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Autonomous code agent + _Mod Creator_</p>
+                                                <ul class="text-gray-400 list-none mt-2 ml-4 space-y-1">
+                                                    <li><span class="prompt">$</span> Full release <strong>September 2025</strong></li>
+                                                    <li><span class="prompt">$</span> Generates, edits, and tests mods for <strong>STALKER 2</strong> and <strong>Fallout</strong> (more games coming).</li>
+                                                </ul>
+                                                <div class="mt-2">
+                                                    <span class="project-tag">PRIVATE</span>
+                                                    <span class="text-gray-400">Request access via email</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-video terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">Sourcerer</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Content-creator copilot</p>
+                                                <div class="mt-2">
+                                                    <span class="project-tag">PAUSED</span>
+                                                    <span class="text-gray-400">Development paused due to budget constraints. Private. Request access via email.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Project 3 -->
-                        <div class="project-card p-6 rounded">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                                    <i class="fas fa-graduation-cap terminal-text"></i>
+                        
+                        <!-- Lab Series Accordion -->
+                        <div class="project-accordion">
+                            <div class="project-accordion-header" onclick="toggleAccordion(this)">
+                                <div class="flex items-center">
+                                    <div class="project-icon">
+                                        <i class="fas fa-flask terminal-text"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold terminal-text">Lab Series</h3>
                                 </div>
-                                <h3 class="text-xl font-bold terminal-text">Mole "Dive into it!"</h3>
+                                <i class="fas fa-chevron-down terminal-text"></i>
                             </div>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> RAG educational assistant that extracts knowledge from your documents to generate academic summaries and answer questions in Insightful or Expert modes (FAISS + LLaMA).</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Education</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">RAG</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">LLaMA</span>
-                            </div>
-                            <a href="https://github.com/DeepRatAI/Mole_v1" target="_blank" class="terminal-text hover:underline flex items-center">
-                                <span class="prompt">$</span> <span class="command">open</span> github
-                            </a>
-                        </div>
-
-                        <!-- Project 4 -->
-                        <div class="project-card p-6 rounded">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                                    <i class="fas fa-book terminal-text"></i>
+                            <div class="project-accordion-content">
+                                <p class="text-gray-400 mb-4"><span class="prompt">$</span> The "playground" where it all began—educational repos, experiments, benchmarks, and proof-of-concepts that document my continuous learning.</p>
+                                
+                                <div class="ml-4 mt-6">
+                                    <p class="text-gray-400 mb-2"><span class="prompt">$</span> • Contents: interactive notebooks, demos, curated datasets, articles</p>
+                                    <p class="text-gray-400 mb-4"><span class="prompt">$</span> • Goal: share knowledge, inspire others, and validate ideas quickly before scaling</p>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-book terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">Mole</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Mini-RAG tutorial to teach the mechanics of Retrieval-Augmented Generation.</p>
+                                                <div class="mt-2">
+                                                    <a href="https://github.com/DeepRatAI/Mole_v1" target="_blank" class="project-link">
+                                                        <i class="fab fa-github mr-1"></i> GitHub
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-tachometer-alt terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">Benchmark Chatbot RAG</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> GPU comparison on Colab (quantised vs non-quantised) to prove Colab's viability for prototyping.</p>
+                                                <div class="mt-2">
+                                                    <a href="https://github.com/DeepRatAI/RAGbotBenchmark_Gcolab" target="_blank" class="project-link">
+                                                        <i class="fab fa-github mr-1"></i> GitHub
+                                                    </a>
+                                                    <a href="https://www.linkedin.com/pulse/rag-colab-hands-on-benchmarking-phi-2-llama-2-t4-vs-a100-romero-zvrgf" target="_blank" class="project-link ml-4">
+                                                        <i class="fas fa-newspaper mr-1"></i> Article
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-sub-item">
+                                        <div class="flex items-start mb-2">
+                                            <div class="project-icon mr-3 mt-1">
+                                                <i class="fas fa-object-group terminal-text"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold terminal-text">YOLO v8 Playground</h4>
+                                                <p class="text-gray-400 mt-1"><span class="prompt">$</span> Intro to computer vision and object detection with ready-to-run examples.</p>
+                                                <div class="mt-2">
+                                                    <a href="https://github.com/DeepRatAI/Yolov8_Detection" target="_blank" class="project-link">
+                                                        <i class="fab fa-github mr-1"></i> GitHub
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h3 class="text-xl font-bold terminal-text">VernnEdX</h3>
                             </div>
-                            <span class="coming-soon">COMING SOON</span>
-                            <p class="text-gray-400 mb-4"><span class="prompt">$</span> Narrative Science: Turn scientific questions into literary stories with comic-style vignettes.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Creative AI</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Education</span>
-                                <span class="text-xs px-2 py-1 bg-secondary bg-opacity-20 rounded">Storytelling</span>
-                            </div>
-                            <a href="https://github.com/DeepRatAI/VernnEd-X" target="_blank" class="terminal-text hover:underline flex items-center">
-                                <span class="prompt">$</span> <span class="command">open</span> github
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- Contact Section -->
          <section id="contact" class="container mx-auto px-6 py-20">
             <div class="terminal-bg p-6 rounded">
@@ -704,21 +820,17 @@
                         </h3>
                         <p class="text-gray-400"><span class="prompt">$</span> I'm currently looking for new opportunities in AI engineering and data science. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
                     </div>
-
                     <div class="max-w-2xl mx-auto">
                         <form id="contactForm"
                               action="https://formsubmit.co/info@deeprat.tech"
                               method="POST"
                               class="space-y-6">
-
                             <!-- Honeypot antispam -->
                             <input type="text" name="_honey" style="display:none">
-
                             <!-- Personalización FormSubmit -->
                             <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde formulario DeepRat">
                             <input type="hidden" name="_next"    value="https://deeprat.tech/gracias.html">
                             <input type="hidden" name="_captcha" value="false">
-
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-400 mb-2">
                                     <span class="prompt">$</span> Name:
@@ -741,7 +853,6 @@
                                 <span class="prompt">$</span> <span class="command">send_message</span>
                             </button>
                         </form>
-
                         <div class="mt-12 flex justify-center space-x-6">
                             <a href="https://github.com/DeepRatAI" target="_blank" class="terminal-text hover:text-secondary transition text-xl">
                                 <span class="prompt">$</span> <span class="command">github</span>
@@ -757,13 +868,11 @@
                 </div>
             </div>
         </section>
-
         <!-- Footer -->
         <footer class="container mx-auto px-6 py-8 text-center text-gray-500 text-sm terminal-bg">
-            <p><span class="prompt">$</span> <span class="command">exit</span> © 2023 DeepRat. All rights reserved.</p>
+            <p><span class="prompt">$</span> <span class="command">exit</span> © 2025 DeepRat. All rights reserved.</p>
         </footer>
     </div>
-
     <script>
         // Initialize Particles.js with terminal-style particles
         document.addEventListener('DOMContentLoaded', function() {
@@ -878,27 +987,22 @@
                 },
                 "retina_detect": true
             });
-
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-
                     document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
                     });
                 });
             });
-
             // Add typing animation to console output
             const consoleOutput = document.querySelector('.console-output');
             if (consoleOutput) {
                 const originalContent = consoleOutput.innerHTML;
                 consoleOutput.innerHTML = '';
-
                 let i = 0;
                 const speed = 7;
-
                 function typeWriter() {
                     if (i < originalContent.length) {
                         consoleOutput.innerHTML += originalContent.charAt(i);
@@ -906,21 +1010,17 @@
                         setTimeout(typeWriter, speed);
                     }
                 }
-
                 setTimeout(typeWriter, 1000);
             }
-
             // Language switcher functionality
             const languageBtn = document.getElementById('languageBtn');
             const mobileLanguageBtn = document.getElementById('mobileLanguageBtn');
             const languageDropdown = document.getElementById('languageDropdown');
             const languageOptions = document.querySelectorAll('.language-option');
-            
             if (languageBtn && languageDropdown) {
                 languageBtn.addEventListener('click', () => {
                     languageDropdown.classList.toggle('active');
                 });
-                
                 // Close dropdown when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
@@ -928,7 +1028,6 @@
                     }
                 });
             }
-            
             languageOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     const lang = option.getAttribute('data-lang');
@@ -940,7 +1039,6 @@
                         mobileLanguageBtn.querySelector('span').textContent = lang.toUpperCase();
                     }
                     languageDropdown.classList.remove('active');
-                    
                     // Redirect based on selected language
                     if (lang === 'es') {
                         window.location.href = 'index-es.html';
@@ -949,30 +1047,44 @@
                     }
                 });
             });
-
             // Mobile menu functionality
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             const mobileMenuClose = document.getElementById('mobileMenuClose');
             const overlay = document.getElementById('overlay');
-            
             if (mobileMenuBtn && mobileMenu && mobileMenuClose && overlay) {
                 mobileMenuBtn.addEventListener('click', () => {
                     mobileMenu.classList.add('active');
                     overlay.classList.add('active');
                 });
-                
                 mobileMenuClose.addEventListener('click', () => {
                     mobileMenu.classList.remove('active');
                     overlay.classList.remove('active');
                 });
-                
                 overlay.addEventListener('click', () => {
                     mobileMenu.classList.remove('active');
                     overlay.classList.remove('active');
                 });
             }
         });
+        
+        // Project accordion functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            
+            // Toggle the active class on the content
+            content.classList.toggle('active');
+            
+            // Rotate the chevron icon
+            if (content.classList.contains('active')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
     </script>
 </body>
 </html>
